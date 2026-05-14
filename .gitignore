@@ -1,4 +1,7 @@
 .env
 __pycache__/
 *.pyc
+*.pdf
 .cache/
+venv/
+.env.example
