@@ -198,7 +198,8 @@ The script writes the PDF to:
 Hermes-Architect-Audit/
 |-- assets/
 |   |-- .keep                   # Keeps directory in Git
-|   |-- audit_preview.png       # Visual preview placeholder
+|   |-- before_audit.png        # Audit detection screenshot
+|   |-- Audit_Report.pdf        # Full generated PDF report
 |-- generate_audit_pdf.py       # Core PDF engine (FPDF2 only)
 |-- sample_config.yaml           # Example of 11-task model mapping
 |-- benchmark_data.json          # Real before/after JSON payload
