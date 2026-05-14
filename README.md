@@ -59,48 +59,51 @@ The result is a system that dynamically assigns the right model to the right tas
 
 ## The Impact (Benchmark)
 
-| Metric | Before (Legacy Enterprise Routing) | After (Optimized HAA Routing) |
+### The Problem: Legacy Enterprise Routing
+
+Most enterprise AI stacks are built on a single principle: "use the best model for everything." Engineering teams default to Claude Opus 4.6/4.7, GPT-4o, and GPT-5.5 across all task types -- even trivial ones like session search, shell approvals, and title generation. The result is a budget hemorrhage:
+
+- Session Search: GPT-5.5 at $5.00 Input / $30.00 Output per 1M tokens for basic retrieval
+- Approval checks: Opus 4.6 at $5.00 / $25.00 per 1M tokens for simple shell confirmations
+- Title Generation: GPT-4o at $2.50 / $10.00 per 1M tokens for trivial naming tasks
+- Skills Hub: Opus 4.6 at $5.00 / $25.00 per 1M tokens for keyword matching
+
+This is not a tooling problem. This is a routing problem.
+
+### The Solution: Optimized HAA Routing
+
+Hermes Architect Audit detects this waste automatically. The audit identifies every task where a flagship model is over-provisioned and recommends the correct model for the workload:
+
+- Session Search: Switch to Llama-3.2-3B:Free ($0.00 / $0.00) -- zero cost, sub-100ms latency
+- Approval: Switch to Llama-3.2-3B:Free ($0.00 / $0.00) -- zero cost, sub-100ms
+- Title Generation: Switch to Llama-3.2-3B:Free ($0.00 / $0.00) -- zero cost, identical quality
+- Skills Hub: Switch to Llama-3.2-3B:Free ($0.00 / $0.00) -- zero cost, instant matching
+- Heavy tasks (long-context coding, complex reasoning): Route to Gemini 3.1 Flash Lite at $0.25 / $1.50 with 1M context window
+- Medium tasks (tool traces, memory pruning): Route to DeepSeek-V3.1 at $0.15 / $0.75
+
+### The ROI
+
+| Metric | Legacy Enterprise Routing | Optimized HAA Routing |
 |---|---|---|
-| **Stack Profile** | Claude Opus 4.6/4.7, GPT-4o, GPT-5.5 for every task | Gemini 3.1 Flash Lite for heavy tasks, DeepSeek-V3.1 for medium tasks, Llama-3.2-3B:Free for trivial tasks |
-| **Input Cost** | Up to $5.00 / 1M tokens | Down to $0.00 for 6 trivial tasks |
-| **Output Cost** | Up to $30.00 / 1M tokens | $0.00 for free-tier, $1.50/1M for heavy tasks |
-| **Latency (TTFT)** | 800ms+ on flagship models | Sub-100ms on local 3B models, ~350ms on Gemini Flash Lite |
-| **Context Window** | 128K on GPT-4o, variable fragmentation | Seamless 1M tokens on Gemini 3.1 Flash Lite |
+| **Stack** | Opus 4.6/4.7, GPT-4o, GPT-5.5 on every task | Free 3B for trivial tasks, Flash Lite for heavy, DeepSeek for medium |
+| **Input Cost** | Up to $5.00 / 1M tokens | Down to $0.00 on 6 task slots |
+| **Output Cost** | Up to $30.00 / 1M tokens | $0.00 for free-tier, $1.50 / 1M for heavy tasks |
+| **Latency (TTFT)** | 800ms+ on flagship models | Sub-100ms on local 3B models |
+| **Context Window** | 128K fragmentation on GPT-4o | Seamless 1M+ tokens on Gemini Flash Lite |
 | **Cost Reduction** | Baseline bleeding | Up to 99% on routine tasks |
 
-**Enterprise Bloated Stack -- before HAA:**
-- Session Search: running GPT-5.5 at $5/$30 per 1M tokens for basic search/retrieval
-- Approval checks: running Opus 4.6 at $5/$25 per 1M tokens for simple shell confirmations
-- Title Generation: running GPT-4o at $2.50/$10 per 1M tokens for trivial session naming
-- Skills Hub: running Opus 4.6 at $5/$25 per 1M tokens for keyword matching
-
-**Optimized Zero-Cost Routing -- after HAA:**
-- Session Search: Llama-3.2-3B:Free ($0.00) -- same retrieval quality, zero cost
-- Approval: Llama-3.2-3B:Free ($0.00) -- instant sub-100ms responses, zero cost
-- Title Generation: Llama-3.2-3B:Free ($0.00) -- identical title quality, zero cost
-- Skills Hub: Llama-3.2-3B:Free ($0.00) -- instant text matching, zero cost
-- Heavy tasks: Gemini 3.1 Flash Lite at $0.25/$1.50 with 1M context
-
-**The ROI math for a mid-size AI engineering team:**
-- 6 out of 11 task slots move to $0.00
-- Remaining 5 slots run at $0.25/$1.50 vs the previous $2.50-$30.00
-- Estimated monthly saving: $100-150 on a realistic enterprise workload
-- At scale (larger teams, higher query volumes), the multiplier scales linearly
+**Real monthly impact for a mid-size AI engineering team:**
+- 6 out of 11 task slots move to $0.00 (free)
+- Remaining 5 slots route to cost-efficient models ($0.15-$0.25 / 1M Input)
+- Estimated monthly saving: $100-150 on a realistic workload
+- At scale, the multiplier is linear with query volume
 
 ---
 
 ## Visual Proof (The ROI)
 
-![Audit Recommendations Example](assets/audit_preview.png)
-
-The audit report flags every task where the current model is over-provisioned. A **"SWITCH"** recommendation means the tool detected that the task is running on a paid model when a free or cheaper alternative exists with acceptable quality. Each recommendation includes:
-
-- Current cost vs proposed cost
-- Context window comparison
-- A rationale tied to your actual usage frequency (e.g., "15+ searches/day")
-- A concrete monthly saving estimate
-
-The result is a printable PDF that CTOs and developers can use to justify infrastructure changes to stakeholders.
+![Enterprise Audit - High Cost Detection](assets/before_audit.png)
+[View the Full Generated Audit PDF](assets/Audit_Report.pdf)
 
 ---
 
