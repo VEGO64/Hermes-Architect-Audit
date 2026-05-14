@@ -1,0 +1,42 @@
+# Sample Configuration — 11 Task Slots
+# ======================================
+# This file demonstrates the model mapping used in the Hermes Architect Audit.
+# Replace these with your actual models from /opt/data/hermes_config/config.yaml
+
+model:
+  provider: openrouter
+  default: google/gemini-3.1-flash-lite
+
+auxiliary:
+  # Compression — zero-cost thinking model for session summarization
+  compression:
+    provider: openrouter
+    model: inclusionai/ring-2.6-1t:free
+
+  # Title Generation — free small model for trivial naming tasks
+  session_title_generation:
+    provider: openrouter
+    model: meta-llama/llama-3.2-3b-instruct:free
+
+  # Session Search — free 3B model for 15+ daily search queries
+  session_search:
+    provider: openrouter
+    model: meta-llama/llama-3.2-3b-instruct:free
+
+  # Skills Hub — free 3B for 10x/day skill retrieval
+  skills_hub:
+    provider: openrouter
+    model: meta-llama/llama-3.2-3b-instruct:free
+
+  # Approval — free 3B for instant shell command feedback
+  approval:
+    provider: openrouter
+    model: meta-llama/llama-3.2-3b-instruct:free
+
+  # Curator — deepseek V3 for memory pruning logic
+  curator:
+    provider: openrouter
+    model: deepseek/deepseek-v3
+
+compression:
+  threshold: 0.5
