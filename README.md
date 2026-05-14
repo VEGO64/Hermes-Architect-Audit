@@ -177,18 +177,28 @@ cp .env.example .env
 # Add your OPENROUTER_API_KEY to .env
 ```
 
-### 3. Generate a Report
+### 3. Run with Sample Data (Zero Configuration)
+
+```bash
+python3 generate_audit_pdf.py "$(cat sample_input.json)"
+```
+
+The script will automatically create the `./output/` directory and write the PDF there.
+
+### 4. Run with Custom JSON
 
 ```bash
 python3 generate_audit_pdf.py '{"profile": "...", "tasks": [...]}'
 ```
 
-### 4. Output Location
+### 5. Output Location
 
-The script writes the PDF to:
+By default, the script writes the PDF to:
 ```
-~/.cache/documents/Model_Cost_Intelligence_[DATE]_v5.pdf
+./output/Model_Cost_Intelligence_[DATE]_v5.pdf
 ```
+
+The output directory is relative and auto-created -- no hardcoded paths.
 
 ---
 
@@ -200,8 +210,11 @@ Hermes-Architect-Audit/
 |   |-- .keep                   # Keeps directory in Git
 |   |-- before_audit.png        # Audit detection screenshot
 |   |-- Audit_Report.pdf        # Full generated PDF report
+|-- output/                      # Auto-created on first run
+|   |-- Model_Cost_Intelligence_[DATE]_v5.pdf
 |-- generate_audit_pdf.py       # Core PDF engine (FPDF2 only)
 |-- sample_config.yaml           # Example of 11-task model mapping
+|-- sample_input.json            # Enterprise bloated stack test payload
 |-- benchmark_data.json          # Real before/after JSON payload
 |-- requirements.txt             # Python dependencies
 |-- .env.example                 # Environment variable template

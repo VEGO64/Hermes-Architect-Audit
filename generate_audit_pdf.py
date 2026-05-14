@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-Hermes Architect Audit — Core PDF Generation Engine
-====================================================
-Version: 5.0 (Stable)
+Hermes Architect Audit -- Core PDF Generation Engine
+=====================================================
+Version: 5.1 (Environment-Agnostic)
 License: MIT
 
 Description:
     Generates landscape A4 PDF audit reports for multi-agent LLM routing.
-    Pure Python FPDF2 — no external chart dependencies.
+    Pure Python FPDF2 -- no external chart dependencies.
     Stable vertical-block card layout with zero truncation.
+    Fully environment-agnostic: works on Linux, Mac, and Windows.
 
 Author: Hgteo (VEGO64)
 Repository: https://github.com/VEGO64/Hermes-Architect-Audit
@@ -19,6 +20,18 @@ from datetime import datetime
 import os, sys, json
 
 DATE = datetime.now().strftime("%Y-%m-%d")
+
+# ─── Output Directory (relative, auto-created) ───────────────────────────────
+OUT = "./output"
+os.makedirs(OUT, exist_ok=True)
+
+# ─── Font Setup (cross-platform fallback) ────────────────────────────────────
+FONT_DIR = "/usr/share/fonts/truetype/dejavu"
+if os.path.isdir(FONT_DIR):
+    FPDF_FONT_DIR = FONT_DIR
+else:
+    # Disable FPDF built-in font directory -- use default Arial/Helvetica
+    FPDF_FONT_DIR = None
 
 # ─── Layout Constants ────────────────────────────────────────────────────────
 LM = 8        # Left/Right margin mm
@@ -225,8 +238,6 @@ if __name__ == '__main__':
         sys.exit(1)
 
     pdf = build(data)
-    out_dir = os.path.join(os.path.expanduser('~'), '.cache', 'documents')
-    os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, f'Model_Cost_Intelligence_{DATE}_v5.pdf')
+    out_path = os.path.join(OUT, f'Model_Cost_Intelligence_{DATE}_v5.pdf')
     pdf.output(out_path)
     print(f"PDF_PATH:{out_path}")
