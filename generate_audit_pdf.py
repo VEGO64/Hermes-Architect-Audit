@@ -72,12 +72,11 @@ class P(FPDF):
         self.set_text_color(*C['BLACK'])
 
     def footer(self):
-        h = self.page_h
         self.set_fill_color(*C['DKGREY'])
-        self.rect(0, h - FTR_H, 297, FTR_H, 'F')
+        self.rect(0, self.h - FTR_H, 297, FTR_H, 'F')
         self.set_font('Helvetica', '', 7)
         self.set_text_color(*C['WHITE'])
-        self.set_xy(0, h - FTR_H + 2.5)
+        self.set_xy(0, self.h - FTR_H + 2.5)
         txt = f'Model Cost Intelligence -- Audit v5 -- Page {self.page_no()}'
         self.cell(INNER_W, 4, txt, align='C')
         self.set_text_color(*C['BLACK'])
@@ -134,7 +133,7 @@ def task_card(pdf, t):
     pdf.set_x(LM)
     pdf.set_font('Helvetica', 'B', 9)
     pdf.set_text_color(*C['RED'])
-    pdf.cell(INNER_W, 5, f"TASK: {t['name'].upper()}", ln=1)
+    pdf.cell(INNER_W, 5, f"TASK: {t['name'].upper()}", new_x="LMARGIN", new_y="NEXT")
 
     pdf.set_x(LM)
     pdf.set_font('Helvetica', '', 7.5)
@@ -142,27 +141,27 @@ def task_card(pdf, t):
     cur_model = t.get('current', '')
     cur_in = t.get('cur_in', 'N/A')
     cur_out = t.get('cur_out', 'N/A')
-    pdf.cell(0, 4, f"CURRENT: {cur_model}  |  In {cur_in} / 1M  |  Out {cur_out} / 1M", ln=1)
+    pdf.cell(0, 4, f"CURRENT: {cur_model}  |  In {cur_in} / 1M  |  Out {cur_out} / 1M", new_x="LMARGIN", new_y="NEXT")
 
     pdf.ln(1.5)
     pdf.set_x(LM)
     pdf.set_font('Helvetica', 'B', 8)
     pdf.set_text_color(*C['GREEN'])
-    pdf.cell(0, 4, f"OPTION A (Efficiency Leader): {t['opt_a_name']}", ln=1)
+    pdf.cell(0, 4, f"OPTION A (Efficiency Leader): {t['opt_a_name']}", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(LM)
     pdf.set_font('Helvetica', '', 7.5)
     pdf.set_text_color(*C['BLACK'])
-    pdf.cell(0, 4, f"   In ${t.get('a_in','?')}/1M  |  Out ${t.get('a_out','?')}/1M  |  Context {t.get('a_ctx','?')}", ln=1)
+    pdf.cell(0, 4, f"   In ${t.get('a_in','?')}/1M  |  Out ${t.get('a_out','?')}/1M  |  Context {t.get('a_ctx','?')}", new_x="LMARGIN", new_y="NEXT")
 
     pdf.ln(1.5)
     pdf.set_x(LM)
     pdf.set_font('Helvetica', 'B', 8)
     pdf.set_text_color(*C['BLUE'])
-    pdf.cell(0, 4, f"OPTION B (Performance Leader): {t['opt_b_name']}", ln=1)
+    pdf.cell(0, 4, f"OPTION B (Performance Leader): {t['opt_b_name']}", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(LM)
     pdf.set_font('Helvetica', '', 7.5)
     pdf.set_text_color(*C['BLACK'])
-    pdf.cell(0, 4, f"   In ${t.get('b_in','?')}/1M  |  Out ${t.get('b_out','?')}/1M  |  Context {t.get('b_ctx','?')}", ln=1)
+    pdf.cell(0, 4, f"   In ${t.get('b_in','?')}/1M  |  Out ${t.get('b_out','?')}/1M  |  Context {t.get('b_ctx','?')}", new_x="LMARGIN", new_y="NEXT")
 
     pdf.ln(2)
 
@@ -170,7 +169,7 @@ def task_card(pdf, t):
     pdf.set_x(LM)
     pdf.set_font('Helvetica', 'B', 8)
     pdf.set_text_color(*C['BLACK'])
-    pdf.cell(0, 4, f"FINAL RECOMMENDATION: {rec}", ln=1)
+    pdf.cell(0, 4, f"FINAL RECOMMENDATION: {rec}", new_x="LMARGIN", new_y="NEXT")
 
     pdf.set_x(LM)
     pdf.set_font('Helvetica', '', 7)
