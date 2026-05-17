@@ -163,7 +163,7 @@ HAA detects this waste automatically and recommends the correct model per task:
 
 Not every task should go to the cheapest model:
 
-### 🔻 Trivial → $0 (Pure Overkill)
+### Trivial - Zero Cost (Pure Overkill)
 
 **Compression: Opus 4.6 ($5/$25) → Ring 2.6-1t:Free ($0/$0)**
 
@@ -173,15 +173,15 @@ Session compression is structural summarization — no creativity needed. Ring 2
 
 Shell safety checks don't need frontier reasoning. Llama 3B responds in sub-100ms vs 800ms+, with identical safety logic.
 
-### 🔺 Heavy → Guarded Model (Anti-Hallucination)
+### Heavy - Guarded Model (Anti-Hallucination)
 
-**Curator: Opus 4.7 ($5/$25) → DeepSeek V3.1 ($0.15/$0.75)**
+**Curator: Opus 4.7 ($5/$25) → DeepSeek V3.2 ($0.252/$0.378)**
 
-Memory pruning decisions hallucinate if the model lacks instruction alignment — a 3B model dropping a memory entry corrupts session state. DeepSeek V3.1 (33× cheaper than Opus 4.7) provides the rigor needed without going free.
+Memory pruning decisions hallucinate if the model lacks instruction alignment — a 3B model dropping a memory entry corrupts session state. DeepSeek V3.2 (33x cheaper than Opus 4.7) provides the rigor needed without going free.
 
 **MCP Tooling: GPT-4o ($2.50/$10) → Gemini Flash Lite ($0.25/$1.50)**
 
-Flash Lite keeps **1M context** — critical for long tool traces. GPT-4o's 128K would truncate multi-step execution logs. The recommendation preserves context integrity over raw cost savings.
+Flash Lite keeps 1M context — critical for long tool traces. GPT-4o's 128K would truncate multi-step execution logs. The recommendation preserves context integrity over raw cost savings.
 
 ---
 
@@ -266,14 +266,14 @@ The `sample_input.json` maps directly to Hermes Agent's auxiliary task slots:
 | Default Chat | Opus 4.6 ($5/$25) | Flash Lite ($0.25/$1.50) |
 | Vision | GPT-4o ($2.50/$10) | Flash Lite ($0.25/$1.50) |
 | Web Extract | GPT-4o ($2.50/$10) | Flash Lite ($0.25/$1.50) |
-| Compression | Opus 4.6 ($5/$25) | Ring 2.6:Free ($0) |
-| Session Search | GPT-5.5 ($5/$30) | Llama 3B:Free ($0) |
-| Skills Hub | Opus 4.6 ($5/$25) | Llama 3B:Free ($0) |
-| Approval | GPT-5.5 ($5/$30) | Llama 3B:Free ($0) |
-| MCP Tooling | GPT-4o ($2.50/$10) | Flash Lite ($0.25/$1.50) |
-| Title Gen | GPT-4o ($2.50/$10) | Llama 3B:Free ($0) |
-| Triage | Gemini 3.1 Pro ($2/$12) | Flash Lite ($0.25/$1.50) |
-| Curator | Opus 4.7 ($5/$25) | DeepSeek V3.1 ($0.15/$0.75) |
+| Compression | Opus 4.6 ($5/$25) | Ring 2.6:Free ($0/$0) |
+| Session Search | GPT-5.5 ($5/$30) | Ring 2.6:Free ($0/$0) |
+| Skills Hub | Opus 4.6 ($5/$25) | Ring 2.6:Free ($0/$0) |
+| Approval | GPT-5.5 ($5/$30) | Ring 2.6:Free ($0/$0) |
+| MCP Tooling | GPT-4o ($2.50/$10) | Ring 2.6:Free ($0/$0) |
+| Title Gen | GPT-4o ($2.50/$10) | Ring 2.6:Free ($0/$0) |
+| Triage | Gemini 3.1 Pro ($2/$12) | Ring 2.6:Free ($0/$0) |
+| Curator | Opus 4.7 ($5/$25) | DeepSeek V3.2 ($0.252/$0.378) |
 
 ---
 
